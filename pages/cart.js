@@ -16,6 +16,11 @@ const CartScreen = () => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item })
   }
 
+  const updateCartHandler = (item, qty) => {
+    const quantity = Number(qty)
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } })
+  }
+
   return (
     <Layout title={'Carrinho'}>
       {cartItems.length === 0 ? (
@@ -49,7 +54,16 @@ const CartScreen = () => {
                         {item.name}
                       </Link>
                     </td>
-                    <td className='p-5 text-right'>{item.quantity}</td>
+                    <td className='p-5 text-right'>
+                      <select value={item.quantity}
+                        onChange={(e) => updateCartHandler(item, e.target.value)}>
+                        {[...Array(item.countInStock).keys()].map(i => (
+                          <option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
                     <td className='p-5 text-center'>R${item.price}</td>
                     <td className='p-5 text-center'>
                       <button onClick={() => removeItemHandler(item)}>
