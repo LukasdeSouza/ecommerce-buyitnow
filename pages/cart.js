@@ -89,7 +89,7 @@ const CartScreen = () => {
               </li>
               <li>
                 <button className='rounded bg-amber-300 py-2 mt-2 px-3 shadow outline-none hover:bg-amber-400 active:bg-amber-500 font-semibold w-full'
-                  onClick={() => router.push('/shipping')}
+                  onClick={() => router.push('login?redirect=/shipping')}
                 >
                   Finalizar Compra
                 </button>
