@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const ProductItem = ({ product }) => {
+
   return (
     <div className='card'>
       <Link href={`/product/${product.slug}`}>
@@ -17,7 +18,8 @@ const ProductItem = ({ product }) => {
         </Link>
         <p className='mb-2 text-xs'>{product.brand}</p>
         <p className='text-sm'>R${product.price}</p>
-        <button className='rounded bg-amber-300 py-1 mt-2 px-4 shadow outline-none hover:bg-amber-400 active:bg-amber-500 primary-button' type='button'>
+        <button
+          className='rounded bg-amber-300 py-1 mt-2 px-4 shadow outline-none hover:bg-amber-400 active:bg-amber-500' type='button'>
           Add ao Carrinho
         </button>
       </div>

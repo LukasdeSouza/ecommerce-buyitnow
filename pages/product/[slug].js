@@ -3,12 +3,13 @@ import { Store } from '@/utils/Store';
 import data from '@/utils/data';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import React, { useContext } from 'react'
 
 const ProductScreen = () => {
   const { state, dispatch } = useContext(Store)
 
+  const router = useRouter()
   const { query } = useRouter();
   const { slug } = query
   const product = data.products.find(x => x.slug === slug)
@@ -27,6 +28,7 @@ const ProductScreen = () => {
       alert('Desculpe, o produto está sem estoque')
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+    router.push('/cart')
   }
 
   return (
