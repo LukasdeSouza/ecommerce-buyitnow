@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { XCircleIcon } from '@heroicons/react/outline'
 import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
+
 
 const CartScreen = () => {
   const { state, dispatch } = useContext(Store)
@@ -100,4 +102,4 @@ const CartScreen = () => {
   )
 }
 
-export default CartScreen
+export default dynamic(() => Promise.resolve(CartScreen), { ssr: false })

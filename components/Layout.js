@@ -1,11 +1,17 @@
 import { Store } from '@/utils/Store'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 const Layout = ({ title, children }) => {
   const { state } = useContext(Store)
   const { cart } = state
+
+  const [cartItemsCount, setCartItemsCount] = useState(0)
+
+  useEffect(() => {
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0))
+  }, [cart.cartItems])
 
   return (
     <>
@@ -23,9 +29,9 @@ const Layout = ({ title, children }) => {
             </Link>
             <div>
               <Link className='p-2' href="/cart">
-                {cart.cartItems.length > 0 && (
+                {cartItemsCount > 0 && (
                   <span className='mt-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white'>
-                    <a>{cart.cartItems.reduce((a, c) => a + c.quantity, 0)}</a>
+                    <a>{cartItemsCount}</a>
                   </span>
                 )}
                 Carrinho
