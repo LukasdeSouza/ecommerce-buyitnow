@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.6",
+    "bcryptjs": "^2.4.3",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
     "js-cookie": "^3.0.1",
+    "mongoose": "^7.0.3",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
