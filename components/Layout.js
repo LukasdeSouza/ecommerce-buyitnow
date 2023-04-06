@@ -5,6 +5,7 @@ import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Menu } from '@headlessui/react'
+import { UserIcon } from '@heroicons/react/outline'
 import 'react-toastify/dist/ReactToastify.css'
 import DropdownLink from './DropdownLink'
 import Cookies from 'js-cookie'
@@ -56,12 +57,14 @@ const Layout = ({ title, children }) => {
                 ('Loading') :
                 session?.user ?
                   <Menu as={'div'} className="relative inline-block">
-                    <Menu.Button className="text-blue-600">
+                    <Menu.Button className="text-blue-600 hover:text-blue-800 ml-4 mr-8">
                       {session.user.name}
                     </Menu.Button>
                     <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white shadow-lg">
                       <Menu.Item>
-                        <DropdownLink className='dropdown-link'>Perfil</DropdownLink>
+                        <DropdownLink className='dropdown-link'>
+                          Perfil
+                        </DropdownLink>
                       </Menu.Item>
                       <Menu.Item>
                         <DropdownLink
