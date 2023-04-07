@@ -19,7 +19,7 @@ const ProductItem = ({ product }) => {
         <p className='mb-2 text-xs'>{product.brand}</p>
         <p className='text-sm'>R${product.price}</p>
         <button
-          className='rounded bg-amber-300 py-1 mt-2 px-4 shadow outline-none hover:bg-amber-400 active:bg-amber-500' type='button'>
+          className='primary-button' type='button'>
           Add ao Carrinho
         </button>
       </div>

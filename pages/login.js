@@ -75,7 +75,7 @@ const LoginScreen = () => {
           )}
         </div>
         <div className='mb-4'>
-          <button className='rounded bg-amber-300 py-2 mt-2 px-3 shadow outline-none hover:bg-amber-400 active:bg-amber-500 font-semibold w-1/5'>
+          <button className='primary-button'>
             Entrar
           </button>
         </div>
