@@ -42,7 +42,7 @@ const ShippingScreen = () => {
   }, [setValue, shippingAddress])
 
   return (
-    <Layout title={'Endereço Frete'}>
+    <Layout title={'Endereço Envio |'}>
       <CheckoutWizard activeStep={1} />
       <form className='mx-auto max-w-screen-md' onSubmit={handleSubmit(submitHandler)}>
         <h1 className='mb-4 text-xl font-semibold'>Endereço de Envio</h1>
