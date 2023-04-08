@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const ProductItem = ({ product }) => {
+const ProductItem = ({ product, addToCartHandler }) => {
 
   return (
     <div className='card'>
@@ -19,7 +19,7 @@ const ProductItem = ({ product }) => {
         <p className='mb-2 text-xs'>{product.brand}</p>
         <p className='text-sm'>R${product.price}</p>
         <button
-          className='primary-button' type='button'>
+          className='primary-button' type='button' onClick={() => addToCartHandler(product)}>
           Add ao Carrinho
         </button>
       </div>
