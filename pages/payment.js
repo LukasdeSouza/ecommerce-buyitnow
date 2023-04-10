@@ -20,7 +20,7 @@ const PaymentScreen = () => {
     if (!selectedPaymentMethod) {
       return toast.error('Forma de Pagamento é obrigatória')
     }
-    dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: { selectedPaymentMethod } })
+    dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: selectedPaymentMethod })
     Cookies.set('cart',
       JSON.stringify({ ...cart, paymentMethod: selectedPaymentMethod })
     )
@@ -66,5 +66,7 @@ const PaymentScreen = () => {
     </Layout>
   )
 }
+
+PaymentScreen.auth = true
 
 export default PaymentScreen
