@@ -29,14 +29,13 @@ export default NextAuth({
         });
         await db.disconnect();
         if (user && bcryptjs.compareSync(credentials.password, user.password)) {
-          console.log('blz')
+          console.log('passou')
           return {
-            user
-            // _id: user._id,
-            // name: user.name,
-            // email: user.email,
-            // image: 'f',
-            // isAdmin: user.isAdmin,
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            image: 'f',
+            isAdmin: user.isAdmin,
           };
         }
         throw new Error('Email ou Senha Inválidos');
