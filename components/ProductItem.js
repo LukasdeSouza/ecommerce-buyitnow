@@ -19,7 +19,7 @@ const ProductItem = ({ product, addToCartHandler }) => {
         <p className='mb-2 text-xs'>{product.brand}</p>
         <p className='text-sm'>R${product.price}</p>
         <button
-          className='primary-button' type='button' onClick={() => addToCartHandler(product)}>
+          className='primary-button mt-2' type='button' onClick={() => addToCartHandler(product)}>
           Add ao Carrinho
         </button>
       </div>

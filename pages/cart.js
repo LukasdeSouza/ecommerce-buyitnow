@@ -31,7 +31,7 @@ const CartScreen = () => {
   }
 
   return (
-    <Layout title={'Carrinho'}>
+    <Layout title={'Carrinho |'}>
       {cartItems.length === 0 ? (
         <div className='text-center'>
           Carrinho vazio.
