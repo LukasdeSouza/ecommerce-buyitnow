@@ -42,7 +42,8 @@ const OrderScreen = () => {
 
   return (
     <Layout title={`Pedido ${orderId}`}>
-      <h1 className='mb-4 tet-xl'>Pedido {orderId}</h1>
+      <h1 className='text-xl'>Detalhes do Pedido</h1>
+      <h1 className='mb-4 text-sm'><i>{orderId}</i></h1>
       {loading ?
         <div>Loading...</div> :
         error ?
@@ -52,8 +53,8 @@ const OrderScreen = () => {
           <div className='grid md:grid-cols-4 md:gap-5'>
             <div className='overflow-x-auto md:col-span-3'>
               <div className='card p-5'>
-                <h2 className='mb-2 text-lg'> Endereço de Envio</h2>
-                <div>
+                <h2 className='mb-2 text-lg font-semibold'> Endereço de Envio</h2>
+                <div className='mb-4 text-sm'>
                   {shippingAddress.fullName}, {shippingAddress.address},{" "}
                   {shippingAddress.city}, {shippingAddress.postalCode},{" "}
                   {shippingAddress.country}
@@ -64,25 +65,25 @@ const OrderScreen = () => {
                   </div>
                 ) : (
                   <div className='alert-error'>
-                    Não entregue
+                    Não entregue não concluída
                   </div>
                 )}
               </div>
               <div className='card p-5'>
-                <h2 className='mb-2 text-lg'>Forma de Pagamento</h2>
-                <div>{paymentMethod}</div>
+                <h2 className='mb-2 text-lg font-semibold'>Forma de Pagamento</h2>
+                <div className='mb-4 text-sm'>{paymentMethod}</div>
                 {isPaid ? (
                   <div className='alert-success'>
                     Pago em {paidAt}
                   </div>
                 ) : (
                   <div className='alert-error'>
-                    Não pago
+                    Pagamento não concluído
                   </div>
                 )}
               </div>
               <div className='card overflow-x-auto p-5'>
-                <h2 className='mb-2 text-lg'>Items Pedidos</h2>
+                <h2 className='mb-2 text-lg font-semibold'>Items Pedidos</h2>
                 <table className='min-w-full'>
                   <thead className='border-b'>
                     <tr>
@@ -94,10 +95,10 @@ const OrderScreen = () => {
                   </thead>
                   <tbody>
                     {orderItems.map((item) => (
-                      <tr className='border-b' key={item._id}>
+                      <tr className='border-b text-sm' key={item._id}>
                         <td>
-                          <Link href={`/product/${item.slug}`}>
-                            <Image
+                          <Link className="flex items-center" href={`/product/${item.slug}`}>
+                            <Image className='rounded-md'
                               src={item.image}
                               alt={item.name}
                               width={50}
