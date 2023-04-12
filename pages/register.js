@@ -1,22 +1,30 @@
 import Layout from '@/components/Layout'
 import Link from 'next/link'
 import { signIn, useSession } from 'next-auth/react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { getError } from '@/utils/error'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const { data: session } = useSession()
-
   const router = useRouter()
   const { redirect } = router.query
 
-  const { handleSubmit, register, formState: { errors } } = useForm()
+  const [loading, setLoading] = useState(false)
 
-  const submitHandler = async ({ email, password }) => {
+  const { handleSubmit, register, formState: { errors }, getValues } = useForm()
+
+  const submitHandler = async ({ name, email, password }) => {
+    setLoading(true)
     try {
+      await axios.post('/api/auth/signup', {
+        name,
+        email,
+        password
+      })
       const result = await signIn('credentials', {
         redirect: false,
         email,
@@ -29,6 +37,7 @@ const LoginScreen = () => {
     catch (error) {
       toast.error(getError(error))
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -38,9 +47,23 @@ const LoginScreen = () => {
   }, [router, session, redirect])
 
   return (
-    <Layout title={'Login |'}>
+    <Layout title={'Criar Conta |'}>
       <form className='mx-auto max-w-screen-md' onSubmit={handleSubmit(submitHandler)}>
-        <h1 className='mb-4 text-xl'>Login</h1>
+        <h1 className='mb-4 text-xl'>Criar Conta</h1>
+        <div className='mb-4'>
+          <label htmlFor="name">Nome</label>
+          <input type="text"
+            {...register('name', {
+              required: 'Digite seu Nome',
+            })}
+            className='w-full'
+            id='name'
+            autoFocus
+          ></input>
+          {errors.name && (
+            <div className="text-red-500">{errors.name.message}</div>
+          )}
+        </div>
         <div className='mb-4'>
           <label htmlFor="email">Email</label>
           <input type="email"
@@ -53,7 +76,6 @@ const LoginScreen = () => {
             })}
             className='w-full'
             id='email'
-            autoFocus
           ></input>
           {errors.email && (
             <div className="text-red-500">{errors.email.message}</div>
@@ -68,24 +90,39 @@ const LoginScreen = () => {
             })}
             className='w-full'
             id='password'
-            autoFocus
           />
           {errors.password && (
             <div className="text-red-500 ">{errors.password.message}</div>
           )}
         </div>
         <div className='mb-4'>
-          <button className='primary-button'>
-            Entrar
+          <label htmlFor="confirmPassword">Confirmar Senha</label>
+          <input type="password"
+            {...register('confirmPassword', {
+              required: 'Confirme sua senha',
+              validate: (value) => value === getValues('password'),
+              minLength: { value: 6, message: 'Senha deve ser maior do que 5 caractéres' },
+            })}
+            className='w-full'
+            id='confirmPassword'
+          />
+          {errors.confirmPassword &&
+            errors.confirmPassword.type === 'validate' && (
+              <div className="text-red-500 ">A senha não confere</div>
+            )}
+        </div>
+        <div className='mb-4'>
+          <button className='primary-button' disabled={loading}>
+            {loading ? 'Carregando...' : 'Cadastrar'}
           </button>
         </div>
         <div className='mb-4'>
-          Não possui conta? &nbsp;
-          <Link className='font-semibold' href={`/register?redirect=${redirect || '/'}`}>Criar Conta</Link>
+          Já possui conta? &nbsp;
+          <Link className='font-semibold' href='/login'>Acessar</Link>
         </div>
       </form>
     </Layout>
   )
 }
 
-export default LoginScreen
+export default RegisterScreen
