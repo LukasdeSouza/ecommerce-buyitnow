@@ -40,7 +40,7 @@ const PaymentScreen = () => {
       <form className='mx-auto max-w-screen-md' onSubmit={submitHandler}>
         <h1 className='mb-4 text-xl'>Forma de Pagamento</h1>
         {
-          ['PayPal', 'Strip', 'CashonDelivery', 'Mercado Pago'].map((payment) => (
+          ['PayPal'].map((payment) => (
             <div clasName='mb-4' key={payment}>
               <input name='paymentMethod'
                 className='p-2 outline-none focus:ring-0'

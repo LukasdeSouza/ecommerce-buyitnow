@@ -29,7 +29,6 @@ export default NextAuth({
         });
         await db.disconnect();
         if (user && bcryptjs.compareSync(credentials.password, user.password)) {
-          console.log('passou')
           return {
             _id: user._id,
             name: user.name,

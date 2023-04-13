@@ -1,10 +1,13 @@
 import Layout from '@/components/Layout'
 import { getError } from '@/utils/error';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
 import React, { useEffect, useReducer } from 'react'
+import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { toast } from 'react-toastify';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -16,6 +19,7 @@ const reducer = (state, action) => {
 }
 
 const OrderScreen = () => {
+  const { data: session } = useSession()
   const { query } = useRouter()
   const orderId = query.id
 
@@ -24,6 +28,47 @@ const OrderScreen = () => {
   const { shippingAddress, paymentMethod, orderItems, itemsPrice,
     taxPrice, shippingPrice, totalPrice, isPaid, paidAt,
     isDelivered, deliveredAt } = order
+
+  const apiMercadoPago = axios.create({
+    baseURL: 'https://api.mercadopago.com'
+  })
+
+  apiMercadoPago.interceptors.request.use(async (config) => {
+    // const token = process.env.PROD_PUBLIC_KEY
+    config.headers.Authorization = "Bearer TEST-1370924993553302-012813-8e63a05f2c034a517a054e39171e1474-83606687"
+    return config
+  })
+
+  // const description = orderItems?.map((item) => item)
+
+  // const finishBuyMercadoPage = () => {
+  //   const body = {
+  //     "transaction_amount": totalPrice,
+  //     "description": description,
+  //     "payment_method_id": "pix",
+  //     "payer": {
+  //       "email": session.user.email,
+  //       "first_name": session.user.name,
+  //       "last_name": "",
+  //       "identification": {
+  //         "type": "Documento Não Informado",
+  //         "number": orderId
+  //       }
+  //     },
+  //     "notification_url": "https://eorpjcvcjvhqnq6.m.pipedream.net"
+  //   }
+  //   apiMercadoPago.post("v1/payments", body).then(response => {
+  //     alert(response)
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // }
+
+  const initialOptionsPayPal = {
+    "client-id": "ASBXdEN7pQunEAGrF-UrYsmHBV5x4YYvmpTnRrGf-jL_Xs7si3rM-QBuu2VhNghbDE1wkGCd3ugV7L0d",
+    currency: "BRL",
+  };
+
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -146,6 +191,29 @@ const OrderScreen = () => {
                     </div>
                   </li>
                 </ul>
+                <PayPalScriptProvider options={initialOptionsPayPal}>
+                  <PayPalButtons
+                    createOrder={(data, actions) => {
+                      return actions.order.create({
+                        purchase_units: [
+                          {
+                            amount: {
+                              value: totalPrice,
+                              currency_code: 'BRL'
+                            }
+                          }]
+                      })
+                    }}
+                    onApprove={(data, actions) => {
+                      return actions.order.capture().then((details) => {
+                        toast.success(`Parabéns ${details.payer.name.given_name}! Sua compra foi efetuada`)
+                      })
+                    }} />
+                </PayPalScriptProvider>
+                {/* <button className='primary-button w-full'
+                  onClick={() => finishBuyMercadoPage()}>
+                  Concluir com Mercado Pago
+                </button> */}
               </div>
             </div>
           </div>
