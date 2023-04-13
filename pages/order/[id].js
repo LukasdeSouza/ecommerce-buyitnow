@@ -194,21 +194,37 @@ const OrderScreen = () => {
                 <PayPalScriptProvider options={initialOptionsPayPal}>
                   <PayPalButtons
                     createOrder={(data, actions) => {
-                      return actions.order.create({
-                        purchase_units: [
-                          {
-                            amount: {
-                              value: totalPrice,
-                              currency_code: 'BRL'
-                            }
-                          }]
-                      })
+                      return actions.order
+                        .create({
+                          purchase_units: [
+                            {
+                              amount: {
+                                value: totalPrice,
+                                currency_code: 'BRL'
+                              }
+                            }]
+                        })
+                        .then((orderID) => {
+                          return orderID
+                        })
                     }}
                     onApprove={(data, actions) => {
-                      return actions.order.capture().then((details) => {
-                        toast.success(`Parabéns ${details.payer.name.given_name}! Sua compra foi efetuada`)
-                      })
-                    }} />
+                      return actions.order
+                        .capture()
+                        .then(async (details) => {
+                          try {
+                            dispatch({ type: "PAY_REQUEST" });
+                            const { data } = await axios.put(`/api/orders/${order._id}/pay`, details)
+                            dispatch({ type: "PAY_SUCCESS", payload: data })
+                            toast.success(`Compra efetuada com sucesso!`)
+                          } catch (error) {
+                            dispatch({ type: "PAY_FAIL", payload: getError(error) })
+                            toast.error(getError(error))
+                          }
+                        })
+                    }}
+                    onError={(error) => toast.error(getError(error))}
+                  />
                 </PayPalScriptProvider>
                 {/* <button className='primary-button w-full'
                   onClick={() => finishBuyMercadoPage()}>
