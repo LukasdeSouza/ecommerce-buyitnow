@@ -29,7 +29,7 @@ export default function Home({ products }) {
   return (
     <div>
       <Layout title={'Home |'}>
-        <Image src={'/../public/images/banner1.jpg'} width={1250} height={250} style={{ borderRadius: 12 }} />
+        <Image src={'/../public/images/banner1.jpg'} width={1250} height={250} style={{ borderRadius: 12 }} alt='banner1' />
         <h1 className='font-semibold text-2xl font-sans text-center'>Your Ecommerce Name</h1>
         <div className='grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4 mt-12'>
           {products.map((product) => (
