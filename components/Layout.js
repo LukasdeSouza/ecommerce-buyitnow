@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Menu } from '@headlessui/react'
-import { UserIcon, ShoppingBagIcon, UserCircleIcon } from '@heroicons/react/outline'
+import { UserIcon, DocumentTextIcon, UserCircleIcon, LogoutIcon } from '@heroicons/react/outline'
 import 'react-toastify/dist/ReactToastify.css'
 import DropdownLink from './DropdownLink'
 import Cookies from 'js-cookie'
@@ -61,27 +61,30 @@ const Layout = ({ title, children }) => {
                   ?
                   <Menu as={'div'} className="relative inline-block">
                     <Menu.Button className="flex flex-row align-middle text-green-600 hover:text-green-800 ml-4 mr-8 font-semibold">
-                      {session.user.name}
-                      <UserCircleIcon className='h-6 w-6 ml-2' />
+                      {session?.user.name}
+                      {/* <UserCircleIcon className='h-6 w-6 ml-2' /> */}
                     </Menu.Button>
                     <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white shadow-lg">
                       <Menu.Item>
-                        <DropdownLink className='dropdown-link'>
+                        <DropdownLink className='flex flex-row align-middle dropdown-link'>
+                          <UserIcon className='h-5 w-5 mr-1 text-green-600' />
                           Perfil
                         </DropdownLink>
                       </Menu.Item>
                       <Menu.Item>
                         <DropdownLink
-                          className='dropdown-link'
+                          className='flex flex-row align-middle dropdown-link'
                           href='/order-history'>
+                          <DocumentTextIcon className='h-5 w-5 mr-1 text-green-600' />
                           Histórico
                         </DropdownLink>
                       </Menu.Item>
                       <Menu.Item>
                         <DropdownLink
-                          className='dropdown-link'
+                          className='flex flex-row align-middle dropdown-link'
                           href='#'
                           onClick={logoutClickHandler}>
+                          <LogoutIcon className='h-5 w-5 ml-1 mr-1 text-green-600' />
                           Sair
                         </DropdownLink>
                       </Menu.Item>
