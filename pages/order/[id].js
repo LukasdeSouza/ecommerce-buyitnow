@@ -110,7 +110,7 @@ const OrderScreen = () => {
                   </div>
                 ) : (
                   <div className='alert-error'>
-                    Não entregue não concluída
+                    Entrega não concluída
                   </div>
                 )}
               </div>
