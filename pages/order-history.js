@@ -17,7 +17,6 @@ function reducer(state, action) {
   }
 }
 
-
 const OrderHistoryScreen = () => {
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -25,6 +24,7 @@ const OrderHistoryScreen = () => {
     error: ''
   })
 
+  console.log(orders)
 
   useEffect(() => {
     const fetchOrders = async () => {
